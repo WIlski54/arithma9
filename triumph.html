@@ -152,26 +152,6 @@
       background: linear-gradient(45deg, #2e003e 0%, #5a00b2 100%);
       box-shadow: 0 0 40px 10px #ffd700cc;
     }
-    .audio-playing {
-      display: none;
-      position: fixed;
-      top: 16px; right: 32px;
-      background: rgba(255, 215, 0, 0.93);
-      color: #28180b;
-      font-family: 'Cinzel', serif;
-      padding: 12px 28px;
-      border-radius: 16px;
-      font-weight: bold;
-      font-size: 1.1em;
-      z-index: 1000;
-      box-shadow: 0 0 25px #ffd70088;
-      letter-spacing: 1px;
-      animation: shine 2s infinite alternate;
-    }
-    @keyframes shine {
-      0% { box-shadow: 0 0 18px #ffd70088; }
-      100% { box-shadow: 0 0 40px #ffd700cc; }
-    }
     @media (max-width: 600px) {
       .amulet-container, .magic-circle, .sparkles { width: 200px; height: 200px; }
       .magic-circle, .sparkles { left: 50%; top: 53%; }
@@ -201,7 +181,6 @@
     </div>
   </div>
   <a href="index.html" class="return-btn">🏠 Neues Abenteuer beginnen</a>
-  <div class="audio-playing" id="audioPlaying">Magie erklingt...</div>
   <script>
     let amuletActivated = false;
     let audioCtx, melodyBuffer, textBuffer, melodySource, textSource, melodyGain, textGain;
@@ -263,8 +242,6 @@
       melodySource.connect(melodyGain).connect(audioCtx.destination);
       melodySource.start();
 
-      document.getElementById('audioPlaying').style.display = 'block';
-
       setTimeout(() => {
         textSource = audioCtx.createBufferSource();
         textSource.buffer = textBuffer;
@@ -273,9 +250,6 @@
         textGain.gain.value = 0.96;
         textSource.connect(textGain).connect(audioCtx.destination);
         textSource.start();
-        textSource.onended = () => {
-          document.getElementById('audioPlaying').style.display = 'none';
-        };
       }, 4000);
     }
 
@@ -304,3 +278,4 @@
   </script>
 </body>
 </html>
+
